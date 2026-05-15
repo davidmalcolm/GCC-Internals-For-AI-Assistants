@@ -24,18 +24,6 @@ for older subsystems.
 **Investigation discipline:** See "Investigation Discipline" section in
 [GCC-Internals-For-AI-Assistants.md](../GCC-Internals-For-AI-Assistants.md) for general debugging principles.
 
-## Useful Dump Options
-
-```bash
-# Dump analyzer exploded graph (.dot format)
-gcc -fanalyzer -fdump-analyzer-graph test.c
-
-# Dump supergraph
-gcc -fanalyzer -fdump-analyzer-supergraph test.c
-```
-
-See `gcc --help=analyzer` for full list of analyzer-specific options.
-
 ## Testing
 
 **Test locations:**
@@ -58,7 +46,7 @@ for DejaGnu details.
 ## Code Organization
 
 **See:** `gcc/doc/analyzer.texi` for documentation of the analyzer's
-architecture and code organization.
+architecture, code organization, and for hints on debugging it.
 
 **Location:** All analyzer code lives in `gcc/analyzer/`
 
