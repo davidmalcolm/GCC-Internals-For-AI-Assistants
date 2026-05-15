@@ -364,7 +364,6 @@ Signed-off-by: Developer Name <email@example.com>
 
 If absent, ask the developer: "Have you completed FSF copyright
 assignment paperwork?" This affects whether `Signed-off-by` is needed.
-Save this to memory for future reference.
 
 **Official info:** https://gcc.gnu.org/contribute.html (copyright
 section)
