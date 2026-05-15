@@ -53,7 +53,6 @@ architecture, code organization, and for hints on debugging it.
 ## Performance Issues
 
 - Analyzer can be slow on large functions with complex control flow
-- Profile with `-ftime-report` to identify bottlenecks
 - See `gcc --help=analyzer` for options to limit exploration
 
 ---
