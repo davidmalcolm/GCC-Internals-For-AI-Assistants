@@ -258,7 +258,7 @@ https://gcc.gnu.org/install/
 
 ### Key Constraints
 
-1. **Conservative C++11 subset:** GCC uses a limited subset of C++11
+1. **Conservative C++14 subset:** GCC uses a limited subset of C++14
    (not latest C++) because GCC must bootstrap on older compilers.
    Features like `auto`, range-based `for`, and `std::unique_ptr` are
    allowed. Check codingconventions.html for current allowed features.
