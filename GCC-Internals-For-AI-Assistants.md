@@ -169,7 +169,7 @@ Covers:
 **Key points for AI assistants:**
 - GCC uses GNU coding style (2-space indents, specific brace
   placement)
-- Conservative subset of C++11 (for bootstrapping compatibility)
+- Conservative subset of C++14 (for bootstrapping compatibility)
 - See `contrib/check_GNU_style.sh` for automated checking
 - Memory management: multiple strategies (see below)
 
@@ -188,7 +188,7 @@ quality/up-to-dateness. Good for understanding practical workflows.
 ### Key Facts
 
 - ChangeLog entries go **in commit messages**, not separate files
-- This avoids merge conflicts (historical GCC used separate files)
+- This avoids merge conflicts (historically GCC used separate files)
 - Format is validated by `contrib/gcc-changelog/git_check_commit.py`
 - Contributors **must write their own** ChangeLogs (copyright &
   review discipline)
@@ -231,7 +231,7 @@ https://gcc.gnu.org/install/
 ### Key Points for AI Assistants
 
 1. **Out-of-tree builds required:** Build in separate directory from
-   source. `DO NOT` run make from source subdirectories.
+   source. *DO NOT* run `make` from source subdirectories.
 
 2. **The `gcc` binary is a driver:** It invokes `cc1` (C compiler),
    `cc1plus` (C++), `as` (assembler), `ld` (linker), etc. When
@@ -250,7 +250,11 @@ https://gcc.gnu.org/install/
 5. **Development workflow:** Some developers maintain multiple build
    trees (development with `--disable-bootstrap`, control for
    baseline, testing with patches). See gcc-newbies-guide for
-   examples.
+   examples. Using `git worktree` is the best way to manage working
+   with multiple source trees, e.g. separate trees for different
+   branches such as `master` and `releases/gcc-16`. Using separate
+   trees avoiding churning the mtime on hundreds of files by
+   switching between branches with `git checkout`.
 
 ## C++ Usage in GCC
 
@@ -364,6 +368,9 @@ Signed-off-by: Developer Name <email@example.com>
 
 If absent, ask the developer: "Have you completed FSF copyright
 assignment paperwork?" This affects whether `Signed-off-by` is needed.
+Don't add a `Signed-off-by:` trailer unless explicitly instructed to.
+The human must understand that the sign-off means certifying the DCO
+(see https://gcc.gnu.org/dco.html).
 
 **Official info:** https://gcc.gnu.org/contribute.html (copyright
 section)
