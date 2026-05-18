@@ -28,9 +28,7 @@ helpful in test design and review rather than just generating code.
 **Primary resource:** gcc-newbies-guide working-with-the-testsuite.rst
 has excellent practical examples of running and debugging tests.
 
-**DejaGnu manual:** Documentation for the test framework (but note:
-don't access online URLs unless directed by user - server load
-concerns).
+**DejaGnu manual:** Documentation for the test framework
 
 ## Test Suite Overview
 
@@ -157,6 +155,12 @@ debugging examples.
 Used to compare test results between control and patched builds.
 Identifies new failures and unexpected passes. See gcc-newbies-guide
 readying-a-patch.rst for regstrapping workflow.
+
+**MCP tool:* https://builder.sourceware.org/mcp
+
+This online service for LLMs offers quick access to an archive of
+analyzed testsuite run results from a variety of projects (including
+GCC), and on a variety of platforms.
 
 ---
 
