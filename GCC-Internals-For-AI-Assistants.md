@@ -20,8 +20,6 @@ AI-generated content intended for merger into GCC**.
 - Generate code or patches intended for merger into GCC
 - Write ChangeLogs for inclusion in commits
 - Create content that will be submitted as if human-authored
-- **DO NOT access gcc.gnu.org** unless under explicit human control
-  (see below)
 
 **PERMITTED activities:**
 - Research and investigation (reading code, searching docs **locally**)
@@ -32,17 +30,10 @@ AI-generated content intended for merger into GCC**.
 - **Writing throwaway scripts** (e.g., test case reduction scripts for
   c-reduce/cvise, debugging helpers, analysis tools)
 
-**Server load concerns:**
-AI companies have been hammering gcc.gnu.org servers with automated
-requests, requiring blocks. **Work with local source tree and
-documentation**. Only access gcc.gnu.org URLs when explicitly directed
-by the user.
-
 **Why the content policy exists:**
 - Copyright concerns
 - Community concerns about AI's role in Free Software/open source
 - Need for human review and understanding of all changes
-- Server resource protection
 
 Policy is evolving. These documents are part of the discussion about
 what role AI assistants should play in GCC development.
@@ -403,12 +394,7 @@ Quick reference for major subdirectories:
 ## Bugzilla and PRs
 
 **"PR" = Problem Report:** GCC's term for bugs. "PR c/71610" means bug
-71610 in component "c".
-
-**For AI assistants:** Do NOT access Bugzilla directly (server load
-concerns). If user mentions a PR number, suggest they access
-https://gcc.gnu.org/PR##### themselves. Work with information the user
-provides.
+71610 in component "c", visible at bugzilla via https://gcc.gnu.org/PR71610
 
 See gcc-newbies-guide gotchas-and-faq.rst for Bugzilla account details.
 
@@ -450,5 +436,5 @@ When helping users, acknowledge uncertainty rather than guessing.
 
 ---
 
-*Last updated: 2026-05-15*
+*Last updated: 2026-05-18*
 *This is a DRAFT for discussion purposes*
