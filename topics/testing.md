@@ -126,6 +126,75 @@ void test(void *ptr)
 **For directives, syntax, and details:** See `sourcebuild.texi` and
 existing tests in `gcc/testsuite/` for patterns.
 
+## Linting DejaGnu Directives: `contrib/dg-lint`
+
+**Run `contrib/dg-lint` on any testcase you write, review, or edit,
+before running it through DejaGnu.**
+
+**Why this matters more than it looks:** DejaGnu *silently ignores* a
+directive it doesn't recognize, and one whose braces or whitespace don't
+match `dg.exp`'s regexp. The test then passes — vacuously, having
+checked nothing. Nothing in the `.sum` or `.log` distinguishes that from
+a test that really passed.
+
+This is a trap for AI assistants in particular: the natural verification
+loop is "run the test, see PASS, report success", and that loop cannot
+detect a typo'd directive. A green run does not mean the directives were
+read.
+
+Real examples the tool catches (from its own `test-1.c`):
+
+```c
+/* { dg_final { scan_assembler_times "vmsumudm" 2 } } */   /* underscore */
+   dg-output-file "m4.out"                                 /* no braces */
+   {dg-output-file "m4.out"}                               /* no whitespace */
+   { dg-output-file, "m4.out" }                            /* trailing comma */
+   { dg-oupyt-file "m4.out" }                              /* misspelled */
+```
+
+The first one is not hypothetical — it shipped in
+`gcc.target/powerpc/vsx-builtin-msum.c` and was fixed in
+r15-3878-gd5864b95ce94d9.
+
+**What it checks:**
+- Unknown directive names, with a fix-it suggesting the closest match
+- Underscores where dashes belong (`dg_final` → `dg-final`)
+- Text that looks like a directive but doesn't match `dg.exp`'s regexp
+- `dg-do` placed after a `dg-require-*` (which doesn't work)
+
+**What it does NOT check** — don't over-trust a clean run:
+- Whether a pattern actually matches the compiler's output
+- Regex escaping inside the pattern (`\\\[` and friends)
+- Unbalanced quotes in the expected text, so a pattern can be looser
+  than intended (`"leak of 'arr\\\[i\\\]"` also matches `arr[i][j]'`)
+- Whether a directive is attached to the right line
+
+Those still need a real DejaGnu run and a careful read of the expected
+text.
+
+**Running it:**
+
+```sh
+# libgdiagnostics.so comes from your build tree, and the
+# -fdiagnostics-add-output argument is mandatory (the script
+# crashes with a TypeError if you omit it).
+LD_LIBRARY_PATH=<build>/gcc \
+  contrib/dg-lint/dg-lint \
+    -fdiagnostics-add-output=sarif:file=dg-lint.sarif \
+    gcc/testsuite/gcc.dg/analyzer/my-new-test.c
+```
+
+It also accepts directories and walks them, skipping `README*`,
+`Makefile.am`/`Makefile.in` and `.exp` files — useful for sweeping a
+whole subdirectory.
+
+Prefer the `sarif:` sink over `text`. The script always installs a text
+sink of its own, so `-fdiagnostics-add-output=text` makes it print every
+diagnostic **twice**; `sarif:file=...` gives one readable copy on stderr
+plus a machine-queryable file (use `jq`).
+
+Exit status does not reflect findings, so check the output, not `$?`.
+
 ## Test Requirements
 
 When suggesting tests to users:
@@ -160,5 +229,5 @@ readying-a-patch.rst for regstrapping workflow.
 
 ---
 
-*Last updated: 2026-05-15*
+*Last updated: 2026-10-09*
 *This is a DRAFT for discussion purposes*
